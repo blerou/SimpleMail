@@ -1,0 +1,19 @@
+foo_template:
+  subject: 'foo'
+  plain: |
+    foo
+    
+    foofoofoofoo
+  html: |
+    <h1>foo</h1>
+    <p>foofoofoofoo</p>
+
+bar_template:
+  subject: 'bar'
+  plain: |
+    bar
+    
+    barbarbarbar
+  html: |
+    <h1>bar</h1>
+    <p>barbarbarbar</p>

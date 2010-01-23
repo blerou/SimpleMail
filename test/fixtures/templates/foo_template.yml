@@ -1,0 +1,8 @@
+subject: 'foo'
+plain: |
+  foo
+  
+  foofoofoofoo
+html: |
+  <h1>foo</h1>
+  <p>foofoofoofoo</p>

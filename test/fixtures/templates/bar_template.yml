@@ -1,0 +1,8 @@
+subject: 'bar'
+plain: |
+  bar
+  
+  barbarbarbar
+html: |
+  <h1>bar</h1>
+  <p>barbarbarbar</p>

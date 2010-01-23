@@ -1,0 +1,8 @@
+subject: 'subject {{ $subject }}'
+plain: |
+  Plain {{ $recipient_name }}!
+  
+  Body: {{ $body }}
+html: |
+  <h1>Html {{ $recipient_name }}!</h1>
+  <p>Body:<br>{{ $body }}</p>
