@@ -26,7 +26,13 @@
 
 interface SimpleMail_Template_Renderer_Interface
 {
-    public function __construct(SimpleMail_Template_Loader_Interface $loader);
+    /**
+     * template loader setter
+     *
+     * @param  SimpleMail_Template_Loader_Interface $loader
+     * @return SimpleMail_Template_Renderer_Interface
+     */
+    public function setLoader(SimpleMail_Template_Loader_Interface $loader);
 
     /**
      * template name setter

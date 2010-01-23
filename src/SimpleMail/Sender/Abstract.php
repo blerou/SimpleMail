@@ -54,7 +54,7 @@ abstract class SimpleMail_Sender_Abstract
     public function __construct(SimpleMail_Template_Renderer_Interface $template, $type = self::TYPE_BOTH, array $attrs = array())
     {
         $this
-            ->setTemplateRenderer($template)
+            ->setRenderer($template)
             ->setType($type)
             ->setAttributes($attrs);
     }
@@ -75,11 +75,21 @@ abstract class SimpleMail_Sender_Abstract
      * @param  SimpleMail_Template_Renderer_Interface $template
      * @return SimpleMail_Sender_Interface
      */
-    public function setTemplateRenderer(SimpleMail_Template_Renderer_Interface $template)
+    public function setRenderer(SimpleMail_Template_Renderer_Interface $template)
     {
         $this->template = $template;
 
         return $this;
+    }
+
+    /**
+     * email type getter
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -102,7 +112,7 @@ abstract class SimpleMail_Sender_Abstract
     }
 
     /**
-     * attribute getter
+     * email attribute getter
      *
      * @param  string $attr
      * @return mixed
@@ -115,7 +125,7 @@ abstract class SimpleMail_Sender_Abstract
     }
 
     /**
-     * Setter method for attrs
+     * email attributes setter
      *
      * @param  array $attrs
      * @return SimpleMail_Sender_Interface

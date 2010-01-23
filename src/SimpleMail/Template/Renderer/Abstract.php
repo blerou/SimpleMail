@@ -47,10 +47,29 @@ abstract class SimpleMail_Template_Renderer_Abstract
      */
     protected $options = array();
 
+    /**
+     * Constructor
+     *
+     * @param  SimpleMail_Template_Loader_Interface $loader
+     * @param  array $options
+     */
     public function __construct(SimpleMail_Template_Loader_Interface $loader, array $options = array())
     {
+        $this->setLoader($loader)
+            ->setOptions($options);
+    }
+
+    /**
+     * template loader setter
+     *
+     * @param  SimpleMail_Template_Loader_Interface $loader
+     * @return SimpleMail_Template_Renderer_Interface
+     */
+    public function setLoader(SimpleMail_Template_Loader_Interface $loader)
+    {
         $this->loader = $loader;
-        $this->setOptions($options);
+
+        return $this;
     }
 
     /**

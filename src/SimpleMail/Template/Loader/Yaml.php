@@ -30,7 +30,8 @@
  * Based on symfony's YAML component.
  * @link http://components.symfony-project.org/yaml/
  */
-class SimpleMail_Template_Loader_Yaml implements SimpleMail_Template_Loader_Interface
+class SimpleMail_Template_Loader_Yaml
+    implements SimpleMail_Template_Loader_Interface
 {
     /**
      * @var string

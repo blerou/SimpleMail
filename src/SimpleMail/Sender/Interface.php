@@ -34,15 +34,6 @@ interface SimpleMail_Sender_Interface
     const TYPE_BOTH = 'both';
 
     /**
-     * Constructor
-     *
-     * @param  SimpleMail_Template_Renderer_Interface $template
-     * @param  string $type
-     * @param  array $attrs
-     */
-    public function __construct(SimpleMail_Template_Renderer_Interface $template, $type = self::TYPE_BOTH, array $attrs = array());
-
-    /**
      * send email
      */
     public function send();
@@ -54,11 +45,41 @@ interface SimpleMail_Sender_Interface
      */
     public function getRenderer();
 
+    /**
+     * template renderer setter
+     *
+     * @param  SimpleMail_Template_Renderer_Interface $template
+     * @return SimpleMail_Sender_Interface
+     */
     public function setRenderer(SimpleMail_Template_Renderer_Interface $template);
 
+    /**
+     * email type getter
+     *
+     * @return string
+     */
+    public function getType();
+
+    /**
+     * email type setter
+     *
+     * @param  string $type
+     * @return SimpleMail_Sender_Interface
+     */
     public function setType($type);
 
+    /**
+     * email attribute getter
+     *
+     * @param mixed $attr
+     */
     public function getAttribute($attr);
 
+    /**
+     * email attributes setter
+     *
+     * @param  array $attrs
+     * @return SimpleMail_Sender_Interface
+     */
     public function setAttributes(array $attrs);
 }
