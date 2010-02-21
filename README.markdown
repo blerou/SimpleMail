@@ -2,4 +2,4 @@
 
 ## Goal
 
-Ease storing, managing and sending email templates.
+Ease to store, render and send email templates.
