@@ -24,8 +24,7 @@
  * THE SOFTWARE.
  */
 
-class SimpleMail_Template_Renderer_Smarty
-    extends SimpleMail_Template_Renderer_Abstract
+class SimpleMail_Template_SmartyRenderer extends SimpleMail_Template_RendererImp
 {
     /**
      * smarty instance
@@ -52,11 +51,11 @@ class SimpleMail_Template_Renderer_Smarty
      *  - left_delimiter: default {{
      *  - right_delimiter: default }}
      *
-     * @param  SimpleMail_Template_Loader_Interface  $loader
+     * @param  SimpleMail_Template_Loader  $loader
      * @param  Smarty  $smarty
      * @param  array   $options
      */
-    public function __construct(SimpleMail_Template_Loader_Interface $loader, Smarty $smarty = null, array $options = array())
+    public function __construct(SimpleMail_Template_Loader $loader, Smarty $smarty = null, array $options = array())
     {
         parent::__construct($loader, $options);
 
@@ -71,7 +70,7 @@ class SimpleMail_Template_Renderer_Smarty
      * clear previous Smarty assignments
      *
      * @param  array $variables
-     * @return SimpleMail_Template_Renderer_Smarty
+     * @return SimpleMail_Template_SmartyRenderer
      */
     public function setVariables(array $variables)
     {
@@ -83,7 +82,7 @@ class SimpleMail_Template_Renderer_Smarty
     /**
      * subject getter
      *
-     * @see SimpleMail_Template_Renderer_Interface
+     * @see SimpleMail_Template_Renderer
      *
      * @return string
      */
@@ -95,7 +94,7 @@ class SimpleMail_Template_Renderer_Smarty
     /**
      * plain body getter
      *
-     * @see SimpleMail_Template_Renderer_Interface
+     * @see SimpleMail_Template_Renderer
      *
      * @return string
      */
@@ -107,7 +106,7 @@ class SimpleMail_Template_Renderer_Smarty
     /**
      * html body getter
      *
-     * @see SimpleMail_Template_Renderer_Interface
+     * @see SimpleMail_Template_Renderer
      *
      * @return string
      */
@@ -135,7 +134,7 @@ class SimpleMail_Template_Renderer_Smarty
      * it also setup Smarty with predefined values
      *
      * @param  Smarty $smarty
-     * @return SimpleMail_Template_Renderer_Smarty
+     * @return SimpleMail_Template_SmartyRenderer
      */
     public function setSmarty(Smarty $smarty)
     {

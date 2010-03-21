@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-class SimpleMail_Sender_Swift extends SimpleMail_Sender_Abstract
+class SimpleMail_SwiftSender extends SimpleMail_SenderImp
 {
     /**
      * @var Swift_Transport
@@ -122,7 +122,7 @@ class SimpleMail_Sender_Swift extends SimpleMail_Sender_Abstract
      * it also reinitialize the swift mailer instance
      *
      * @param  Swift_Transport $transport
-     * @return SimpleMail_Sender_Swift
+     * @return SimpleMail_SwiftSender
      */
     public function setTransport(Swift_Transport $transport)
     {

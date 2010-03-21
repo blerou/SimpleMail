@@ -24,21 +24,21 @@
  * THE SOFTWARE.
  */
 
-interface SimpleMail_Template_Renderer_Interface
+interface SimpleMail_Template_Renderer
 {
     /**
      * template loader setter
      *
-     * @param  SimpleMail_Template_Loader_Interface $loader
-     * @return SimpleMail_Template_Renderer_Interface
+     * @param  SimpleMail_Template_Loader $loader
+     * @return SimpleMail_Template_Renderer
      */
-    public function setLoader(SimpleMail_Template_Loader_Interface $loader);
+    public function setLoader(SimpleMail_Template_Loader $loader);
 
     /**
      * template name setter
      *
      * @param  string $name
-     * @return SimpleMail_Template_Renderer_Interface
+     * @return SimpleMail_Template_Renderer
      */
     public function setName($name);
 
@@ -46,7 +46,7 @@ interface SimpleMail_Template_Renderer_Interface
      * template variable setter
      *
      * @param  array $variables
-     * @return SimpleMail_Template_Renderer_Interface
+     * @return SimpleMail_Template_Renderer
      */
     public function setVariables(array $variables);
 

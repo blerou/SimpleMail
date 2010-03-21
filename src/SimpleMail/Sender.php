@@ -24,23 +24,62 @@
  * THE SOFTWARE.
  */
 
-interface SimpleMail_Template_Loader_Interface
+interface SimpleMail_Sender
 {
     /**
-     * getter of the template with given name
-     *
-     * @param  string $name
-     * @return array
+     * sendable email types
      */
-    public function fetch($name);
+    const TYPE_PLAIN = 'plain';
+    const TYPE_HTML = 'html';
+    const TYPE_BOTH = 'both';
 
     /**
-     * getter of the last modification of a template with the given name
-     *
-     * it's good to invalidate cache on modify
-     *
-     * @param  string $name
-     * @return int
+     * send email
      */
-    public function modifiedAt($name);
+    public function send();
+
+    /**
+     * template renderer getter
+     *
+     * @return SimpleMail_Template_Renderer
+     */
+    public function getRenderer();
+
+    /**
+     * template renderer setter
+     *
+     * @param  SimpleMail_Template_Renderer $template
+     * @return SimpleMail_Sender
+     */
+    public function setRenderer(SimpleMail_Template_Renderer $template);
+
+    /**
+     * email type getter
+     *
+     * @return string
+     */
+    public function getType();
+
+    /**
+     * email type setter
+     *
+     * @param  string $type
+     * @return SimpleMail_Sender
+     */
+    public function setType($type);
+
+    /**
+     * email attribute getter
+     *
+     * @param mixed $attr
+     */
+    public function getAttribute($attr);
+
+    /**
+     * email attributes setter
+     *
+     * @param  array $attrs
+     * @return SimpleMail_Sender
+     */
+    public function setAttributes(array $attrs);
 }

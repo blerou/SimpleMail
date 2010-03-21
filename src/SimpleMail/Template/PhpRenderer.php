@@ -24,62 +24,68 @@
  * THE SOFTWARE.
  */
 
-interface SimpleMail_Sender_Interface
+class SimpleMail_Template_PhpRenderer extends SimpleMail_Template_RendererImp
 {
     /**
-     * sendable email types
-     */
-    const TYPE_PLAIN = 'plain';
-    const TYPE_HTML = 'html';
-    const TYPE_BOTH = 'both';
-
-    /**
-     * send email
-     */
-    public function send();
-
-    /**
-     * template renderer getter
+     * default options:
+     *  - tag_start
+     *  - tag_end
      *
-     * @return SimpleMail_Template_Renderer_Interface
+     * @var array
      */
-    public function getRenderer();
+    protected $options = array(
+        'tag_start' => '{{',
+        'tag_end' => '}}',
+    );
+
+    protected function render($field)
+    {
+        extract($this->variables);
+
+        $_data = $this->loader->fetch($this->name);
+        $_field = strtr($_data[$field], array(
+            $this->getOption('tag_start') => '<?php echo ',
+            $this->getOption('tag_end') => '?>',
+        ));
+
+        ob_start();
+        eval('; ?>'.$_field.'<?php ;');
+        return ob_get_clean();
+    }
 
     /**
-     * template renderer setter
+     * subject getter
      *
-     * @param  SimpleMail_Template_Renderer_Interface $template
-     * @return SimpleMail_Sender_Interface
-     */
-    public function setRenderer(SimpleMail_Template_Renderer_Interface $template);
-
-    /**
-     * email type getter
+     * @see SimpleMail_Template_Renderer
      *
      * @return string
      */
-    public function getType();
+    public function getSubject()
+    {
+        return $this->render('subject');
+    }
 
     /**
-     * email type setter
+     * plain body getter
      *
-     * @param  string $type
-     * @return SimpleMail_Sender_Interface
+     * @see SimpleMail_Template_Renderer
+     *
+     * @return string
      */
-    public function setType($type);
+    public function getPlain()
+    {
+        return $this->render('plain');
+    }
 
     /**
-     * email attribute getter
+     * html body getter
      *
-     * @param mixed $attr
-     */
-    public function getAttribute($attr);
-
-    /**
-     * email attributes setter
+     * @see SimpleMail_Template_Renderer
      *
-     * @param  array $attrs
-     * @return SimpleMail_Sender_Interface
+     * @return string
      */
-    public function setAttributes(array $attrs);
+    public function getHtml()
+    {
+        return $this->render('html');
+    }
 }

@@ -24,69 +24,23 @@
  * THE SOFTWARE.
  */
 
-class SimpleMail_Template_Renderer_Php
-    extends SimpleMail_Template_Renderer_Abstract
+interface SimpleMail_Template_Loader
 {
     /**
-     * default options:
-     *  - tag_start
-     *  - tag_end
+     * getter of the template with given name
      *
-     * @var array
+     * @param  string $name
+     * @return array
      */
-    protected $options = array(
-        'tag_start' => '{{',
-        'tag_end' => '}}',
-    );
-
-    protected function render($field)
-    {
-        extract($this->variables);
-
-        $_data = $this->loader->fetch($this->name);
-        $_field = strtr($_data[$field], array(
-            $this->getOption('tag_start') => '<?php echo ',
-            $this->getOption('tag_end') => '?>',
-        ));
-
-        ob_start();
-        eval('; ?>'.$_field.'<?php ;');
-        return ob_get_clean();
-    }
+    public function fetch($name);
 
     /**
-     * subject getter
+     * getter of the last modification of a template with the given name
      *
-     * @see SimpleMail_Template_Renderer_Interface
+     * it's good to invalidate cache on modify
      *
-     * @return string
+     * @param  string $name
+     * @return int
      */
-    public function getSubject()
-    {
-        return $this->render('subject');
-    }
-
-    /**
-     * plain body getter
-     *
-     * @see SimpleMail_Template_Renderer_Interface
-     *
-     * @return string
-     */
-    public function getPlain()
-    {
-        return $this->render('plain');
-    }
-
-    /**
-     * html body getter
-     *
-     * @see SimpleMail_Template_Renderer_Interface
-     *
-     * @return string
-     */
-    public function getHtml()
-    {
-        return $this->render('html');
-    }
+    public function modifiedAt($name);
 }

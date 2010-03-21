@@ -27,9 +27,9 @@
 require 'symfony/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
-require_once dirname(__FILE__).'/../../../bootstrap.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader/Interface.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader/Yaml.php';
+require_once dirname(__FILE__).'/../../bootstrap.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/YamlLoader.php';
 
 $template_file = TEST_BASE_DIR.'/fixtures/templates.yml';
 $template_dir = TEST_BASE_DIR.'/fixtures/templates';
@@ -38,7 +38,7 @@ $template_dir = TEST_BASE_DIR.'/fixtures/templates';
 $t = new lime_test(11);
 
 try {
-  $loader = new SimpleMail_Template_Loader_Yaml(TEST_BASE_DIR.'/fixtures/no-templates.yml');
+  $loader = new SimpleMail_Template_YamlLoader(TEST_BASE_DIR.'/fixtures/no-templates.yml');
   
   $t->fail('->__construct() have to throw exception on invalid template file');
 } catch (Exception $e) {
@@ -49,7 +49,7 @@ try {
 $t->diag('Fetching templates from one file');
 
 
-$loader = new SimpleMail_Template_Loader_Yaml($template_file);
+$loader = new SimpleMail_Template_YamlLoader($template_file);
 
 try {
   $foo = $loader->fetch('foo_template');
@@ -80,7 +80,7 @@ try {
 $t->diag('Fetching templates from one directory');
 
 
-$loader = new SimpleMail_Template_Loader_Yaml(TEST_BASE_DIR.'/fixtures/templates');
+$loader = new SimpleMail_Template_YamlLoader(TEST_BASE_DIR.'/fixtures/templates');
 
 try {
   $foo = $loader->fetch('foo_template');

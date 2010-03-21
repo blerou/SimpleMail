@@ -24,19 +24,19 @@
  * THE SOFTWARE.
  */
 
-require_once dirname(__FILE__).'/../../../bootstrap.php';
+require_once dirname(__FILE__).'/../../bootstrap.php';
 
 require 'symfony/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader/Interface.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader/Yaml.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Renderer/Interface.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Renderer/Abstract.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Renderer/Php.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/YamlLoader.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Renderer.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/RendererImp.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/PhpRenderer.php';
 
-$loader = new SimpleMail_Template_Loader_Yaml(TEST_BASE_DIR.'/fixtures/templates');
-$renderer = new SimpleMail_Template_Renderer_Php($loader);
+$loader = new SimpleMail_Template_YamlLoader(TEST_BASE_DIR.'/fixtures/templates');
+$renderer = new SimpleMail_Template_PhpRenderer($loader);
 
 $t = new lime_test(3);
 

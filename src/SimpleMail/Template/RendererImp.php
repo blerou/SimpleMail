@@ -24,11 +24,10 @@
  * THE SOFTWARE.
  */
 
-abstract class SimpleMail_Template_Renderer_Abstract
-    implements SimpleMail_Template_Renderer_Interface
+abstract class SimpleMail_Template_RendererImp implements SimpleMail_Template_Renderer
 {
     /**
-     * @var SimpleMail_Template_Loader_Interface
+     * @var SimpleMail_Template_Loader
      */
     protected $loader = null;
 
@@ -50,10 +49,10 @@ abstract class SimpleMail_Template_Renderer_Abstract
     /**
      * Constructor
      *
-     * @param  SimpleMail_Template_Loader_Interface $loader
+     * @param  SimpleMail_Template_Loader $loader
      * @param  array $options
      */
-    public function __construct(SimpleMail_Template_Loader_Interface $loader, array $options = array())
+    public function __construct(SimpleMail_Template_Loader $loader, array $options = array())
     {
         $this->setLoader($loader)
             ->setOptions($options);
@@ -62,10 +61,10 @@ abstract class SimpleMail_Template_Renderer_Abstract
     /**
      * template loader setter
      *
-     * @param  SimpleMail_Template_Loader_Interface $loader
-     * @return SimpleMail_Template_Renderer_Interface
+     * @param  SimpleMail_Template_Loader $loader
+     * @return SimpleMail_Template_Renderer
      */
-    public function setLoader(SimpleMail_Template_Loader_Interface $loader)
+    public function setLoader(SimpleMail_Template_Loader $loader)
     {
         $this->loader = $loader;
 
@@ -76,7 +75,7 @@ abstract class SimpleMail_Template_Renderer_Abstract
      * template name setter
      *
      * @param  string $name
-     * @return SimpleMail_Template_Renderer_Abstract
+     * @return SimpleMail_Template_RendererImp
      */
     public function setName($name)
     {
@@ -89,7 +88,7 @@ abstract class SimpleMail_Template_Renderer_Abstract
      * template variable setter
      *
      * @param  array $variables
-     * @return SimpleMail_Template_Renderer_Abstract
+     * @return SimpleMail_Template_RendererImp
      */
     public function setVariables(array $variables)
     {

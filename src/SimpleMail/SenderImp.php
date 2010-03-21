@@ -24,8 +24,7 @@
  * THE SOFTWARE.
  */
 
-abstract class SimpleMail_Sender_Abstract
-    implements SimpleMail_Sender_Interface
+abstract class SimpleMail_SenderImp implements SimpleMail_Sender
 {
     /**
      * Email type (self::TYPE_* contstants)
@@ -40,18 +39,18 @@ abstract class SimpleMail_Sender_Abstract
     protected $attrs = array();
 
     /**
-     * @var SimpleMail_Template_Renderer_Interface
+     * @var SimpleMail_Template_Renderer
      */
     protected $template;
 
     /**
      * Construct method
      *
-     * @param SimpleMail_Template_Renderer_Interface $template
+     * @param SimpleMail_Template_Renderer $template
      * @param string  $type   email type
      * @param array   $attrs  email attrs
      */
-    public function __construct(SimpleMail_Template_Renderer_Interface $template, $type = self::TYPE_BOTH, array $attrs = array())
+    public function __construct(SimpleMail_Template_Renderer $template, $type = self::TYPE_BOTH, array $attrs = array())
     {
         $this
             ->setRenderer($template)
@@ -62,7 +61,7 @@ abstract class SimpleMail_Sender_Abstract
     /**
      * template renderer getter
      *
-     * @return SimpleMail_Template_Renderer_Interface
+     * @return SimpleMail_Template_Renderer
      */
     public function getRenderer()
     {
@@ -72,10 +71,10 @@ abstract class SimpleMail_Sender_Abstract
     /**
      * template renderer setter
      *
-     * @param  SimpleMail_Template_Renderer_Interface $template
-     * @return SimpleMail_Sender_Interface
+     * @param  SimpleMail_Template_Renderer $template
+     * @return SimpleMail_Sender
      */
-    public function setRenderer(SimpleMail_Template_Renderer_Interface $template)
+    public function setRenderer(SimpleMail_Template_Renderer $template)
     {
         $this->template = $template;
 
@@ -96,7 +95,7 @@ abstract class SimpleMail_Sender_Abstract
      * email type setter
      *
      * @param  string $type
-     * @return SimpleMail_Sender_Interface
+     * @return SimpleMail_Sender
      */
     public function setType($type)
     {
@@ -128,7 +127,7 @@ abstract class SimpleMail_Sender_Abstract
      * email attributes setter
      *
      * @param  array $attrs
-     * @return SimpleMail_Sender_Interface
+     * @return SimpleMail_Sender
      */
     public function setAttributes(array $attrs)
     {

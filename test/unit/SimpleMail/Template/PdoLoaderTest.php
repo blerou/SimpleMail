@@ -24,9 +24,9 @@
  * THE SOFTWARE.
  */
 
-require_once dirname(__FILE__).'/../../../bootstrap.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader/Interface.php';
-require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader/PDO.php';
+require_once dirname(__FILE__).'/../../bootstrap.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/Loader.php';
+require_once TEST_BASE_DIR.'/../src/SimpleMail/Template/PdoLoader.php';
 
 
 $pdo = new PDO('sqlite::memory');
@@ -54,7 +54,7 @@ $t->diag('Fetching template with default settings');
 
 
 try {
-    $loader = new SimpleMail_Template_Loader_PDO($pdo);
+    $loader = new SimpleMail_Template_PdoLoader($pdo);
     $data = $loader->fetch('foo');
 
     $t->pass('->fetch() load valid template properly from template database');
@@ -87,7 +87,7 @@ $t->diag('Fetching templates with custom settings');
 
 
 try {
-    $loader = new SimpleMail_Template_Loader_PDO($pdo, array(
+    $loader = new SimpleMail_Template_PdoLoader($pdo, array(
         'table_name' => 'test_templates',
         'name_field' => 'name',
         'subject_field' => 'subj',

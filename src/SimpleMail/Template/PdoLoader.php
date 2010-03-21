@@ -25,43 +25,48 @@
  */
 
 /**
- * Yaml based template loader
- *
- * Based on symfony's YAML component.
- * @link http://components.symfony-project.org/yaml/
+ * PDO based template loader
  */
-class SimpleMail_Template_Loader_Yaml
-    implements SimpleMail_Template_Loader_Interface
+class SimpleMail_Template_PdoLoader implements SimpleMail_Template_Loader
 {
     /**
      * @var string
      */
-    protected $yamlFile = null;
+    protected $pdo = null;
 
     /**
+     * template cache
+     *
      * @var array
      */
     protected $data = array();
 
-    public function __construct($yaml_file)
+    /**
+     * options
+     *
+     * @var array
+     */
+    protected $options = array(
+        'table_name' => 'email_templates',
+        'name_field' => 'template',
+        'modified_at_field' => 'modified_at'
+    );
+
+    public function __construct(PDO $pdo, array $options = array())
     {
-        $this->setYamlFile($yaml_file);
+        $this->options = array_merge($this->options, $options);
+        $this->setPDO($pdo);
     }
 
     /**
-     * setter of yaml file or directory of files
+     * setter of PDO instance
      *
-     * @param  string $yaml_file
-     * @return SimpleMail_Template_Loader_Yaml
-     * @throws InvalidArgumentException
+     * @param  PDO $pdo
+     * @return SimpleMail_Template_PdoLoader
      */
-    public function setYamlFile($yaml_file)
+    public function setPDO(PDO $pdo)
     {
-        if (!file_exists($yaml_file)) {
-            throw new InvalidArgumentException("Invalid yaml template file: $yaml_file");
-        }
-        $this->yamlFile = rtrim($yaml_file, '/');
-
+        $this->pdo = $pdo;
         return $this;
     }
 
@@ -70,6 +75,7 @@ class SimpleMail_Template_Loader_Yaml
      *
      * @param  string $name
      * @return array
+     * @throws PDOException
      * @throws InvalidArgumentException
      */
     public function fetch($name)
@@ -78,21 +84,19 @@ class SimpleMail_Template_Loader_Yaml
             return $this->data[$name];
         }
 
-        if (is_dir($this->yamlFile)) {
-            $yaml_file = $this->yamlFile."/$name.yml";
+        $query = "SELECT * FROM %table% WHERE %name% = ?";
+        $stmt = $this->pdo->prepare(strtr($query, array(
+            '%table%' => $this->options['table_name'],
+            '%name%'  => $this->options['name_field'],
+        )));
+        $stmt->execute(array($name));
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!file_exists($yaml_file)) {
-                throw new InvalidArgumentException("Invalid template file: $yaml_file");
-            }
-
-            $this->data[$name] = sfYaml::load($yaml_file);
-        } else {
-            $this->data = sfYaml::load($this->yamlFile);
-
-            if (!isset($this->data[$name])) {
-                throw new InvalidArgumentException("Invalid template name: $name");
-            }
+        if (false === $result) {
+            throw new InvalidArgumentException('Invalid template name: '.$name);
         }
+
+        $this->data[$name] = $result;
 
         return $this->data[$name];
     }
@@ -106,16 +110,8 @@ class SimpleMail_Template_Loader_Yaml
      */
     public function modifiedAt($name)
     {
-        if (is_dir($this->yamlFile)) {
-            $yaml_file = $this->yamlFile."/$name.yml";
+        $data = $this->fetch($name);
 
-            if (!file_exists($yaml_file)) {
-              throw new InvalidArgumentException("Invalid file for last modification: $name");
-            }
-        } else {
-            $yaml_file = $this->yamlFile;
-        }
-
-        return filemtime($yaml_file);
+        return $data[$this->options['modified_at_field']];
     }
 }
